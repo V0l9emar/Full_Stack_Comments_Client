@@ -1,9 +1,8 @@
 .App {
-  width: 100vw;
+  width: 100%;
   height: auto;
   display: flex;
   align-items: center;
-  /* padding-top: 40px; */
   flex-direction: column;
 }
 
@@ -27,67 +26,55 @@ body {
 
 .post:hover {
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  cursor: pointer;
 }
-
 .post .title {
-  /* flex: 20%; */
+  flex: 20%;
   border-bottom: 1px solid lightgray;
   background-color: dodgerblue;
   display: grid;
   place-content: center;
-  padding: 20px;
   color: white;
-  font-size: 1.5em;
 }
 
 .post .body {
-  flex: 70%;
+  flex: 60%;
   display: grid;
   place-content: center;
 }
 
 .post .footer {
-  /* flex: 20%; */
+  flex: 20%;
   border-top: 1px solid lightgray;
   display: flex;
   align-items: center;
-  flex-direction: row-reverse;
-  justify-content: space-around;
-  padding: 10px 15px;
+  padding-left: 15px;
   background-color: dodgerblue;
   color: white;
-  font-size: 1em;
-  font-weight: bold;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
+
 .footer .username {
-  display: flex;
-  /* flex: 50%; */
-  justify-content: flex-end;
-}
-.link {
-  text-decoration: none;
-  color: white;
+  flex: 50%;
 }
 .footer .buttons {
   flex: 50%;
   display: flex;
-  /* justify-content: flex-end; */
+  justify-content: flex-end;
   align-items: center;
 }
 
 .likeBttn {
-  color: rgba(250, 250, 250, 0.5);
+  color: rgba(250, 250, 250, 0.8);
 }
 .unlikeBttn {
   color: white;
 }
 
-.label {
-  margin-right: 10px;
-  font-size: 20px;
-  /* margin-left: 10px; */
+.buttons label {
+  margin-right: 20px;
+  margin-left: 10px;
 }
 
 /* CREATE POST PAGE CSS */
@@ -163,7 +150,7 @@ span {
   justify-content: flex-end;
   align-items: center;
 }
-.navbar a {
+a {
   margin-left: 20px;
   text-decoration: none;
   color: white;
