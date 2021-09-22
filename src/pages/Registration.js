@@ -15,12 +15,11 @@ function Registration() {
   });
 
   const onSubmit = (data) => {
-    axios
-      .post("https://full-stack-comments.herokuapp.com/auth", data)
-      .then(() => {
-        console.log(data);
-      });
+    axios.post("http://localhost:3001/auth", data).then(() => {
+      console.log(data);
+    });
   };
+
   return (
     <div>
       <Formik
@@ -32,21 +31,23 @@ function Registration() {
           <label>Username: </label>
           <ErrorMessage name="username" component="span" />
           <Field
-            autoComplete="off"
+            autocomplete="off"
             id="inputCreatePost"
             name="username"
-            placeholder="(Ex. Username ...)"
+            placeholder="(Ex. John123...)"
           />
+
           <label>Password: </label>
           <ErrorMessage name="password" component="span" />
           <Field
-            autoComplete="off"
+            autocomplete="off"
             type="password"
             id="inputCreatePost"
             name="password"
-            placeholder="(Ex. Password ...)"
+            placeholder="Your Password..."
           />
-          <button type="submit">Register</button>
+
+          <button type="submit"> Register</button>
         </Form>
       </Formik>
     </div>

@@ -13,23 +13,19 @@ function Post() {
   let history = useHistory();
 
   useEffect(() => {
-    axios
-      .get(`https://full-stack-comments.herokuapp.com/posts/byId/${id}`)
-      .then((response) => {
-        setPostObject(response.data);
-      });
+    axios.get(`http://localhost:3001/posts/byId/${id}`).then((response) => {
+      setPostObject(response.data);
+    });
 
-    axios
-      .get(`https://full-stack-comments.herokuapp.com/comments/${id}`)
-      .then((response) => {
-        setComments(response.data);
-      });
+    axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
+      setComments(response.data);
+    });
   }, []);
 
   const addComment = () => {
     axios
       .post(
-        "https://full-stack-comments.herokuapp.com/comments",
+        "http://localhost:3001/comments",
         {
           commentBody: newComment,
           PostId: id,
@@ -56,13 +52,13 @@ function Post() {
 
   const deleteComment = (id) => {
     axios
-      .delete(`https://full-stack-comments.herokuapp.com/comments/${id}`, {
+      .delete(`http://localhost:3001/comments/${id}`, {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then(() => {
         setComments(
           comments.filter((val) => {
-            return val.id !== id;
+            return val.id != id;
           })
         );
       });
@@ -70,7 +66,7 @@ function Post() {
 
   const deletePost = (id) => {
     axios
-      .delete(`https://full-stack-comments.herokuapp.com/posts/${id}`, {
+      .delete(`http://localhost:3001/posts/${id}`, {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then(() => {
@@ -82,7 +78,7 @@ function Post() {
     if (option === "title") {
       let newTitle = prompt("Enter New Title:");
       axios.put(
-        "https://full-stack-comments.herokuapp.com/posts/title",
+        "http://localhost:3001/posts/title",
         {
           newTitle: newTitle,
           id: id,
@@ -91,11 +87,12 @@ function Post() {
           headers: { accessToken: localStorage.getItem("accessToken") },
         }
       );
+
       setPostObject({ ...postObject, title: newTitle });
     } else {
       let newPostText = prompt("Enter New Text:");
       axios.put(
-        "https://full-stack-comments.herokuapp.com/posts/postText",
+        "http://localhost:3001/posts/postText",
         {
           newText: newPostText,
           id: id,
@@ -104,6 +101,7 @@ function Post() {
           headers: { accessToken: localStorage.getItem("accessToken") },
         }
       );
+
       setPostObject({ ...postObject, postText: newPostText });
     }
   };
@@ -125,19 +123,22 @@ function Post() {
           <div
             className="body"
             onClick={() => {
-              if (authState.username === postObject.username) editPost("body");
+              if (authState.username === postObject.username) {
+                editPost("body");
+              }
             }}
           >
             {postObject.postText}
           </div>
           <div className="footer">
-            @{postObject.username}
+            {postObject.username}
             {authState.username === postObject.username && (
               <button
                 onClick={() => {
                   deletePost(postObject.id);
                 }}
               >
+                {" "}
                 Delete Post
               </button>
             )}
@@ -155,21 +156,20 @@ function Post() {
               setNewComment(event.target.value);
             }}
           />
-          <button onClick={addComment}>Add Comment</button>
+          <button onClick={addComment}> Add Comment</button>
         </div>
         <div className="listOfComments">
           {comments.map((comment, key) => {
             return (
               <div key={key} className="comment">
                 {comment.commentBody}
-                <label> @{comment.username}</label>
+                <label> Username: {comment.username}</label>
                 {authState.username === comment.username && (
                   <button
                     onClick={() => {
                       deleteComment(comment.id);
                     }}
                   >
-                    {" "}
                     X
                   </button>
                 )}

@@ -7,6 +7,7 @@ import { AuthContext } from "../helpers/AuthContext";
 
 function CreatePost() {
   const { authState } = useContext(AuthContext);
+
   let history = useHistory();
   const initialValues = {
     title: "",
@@ -20,12 +21,12 @@ function CreatePost() {
   }, []);
   const validationSchema = Yup.object().shape({
     title: Yup.string().required("You must input a Title!"),
-    postText: Yup.string().required("Pleace input Post"),
+    postText: Yup.string().required(),
   });
 
   const onSubmit = (data) => {
     axios
-      .post("https://full-stack-comments.herokuapp.com/posts", data, {
+      .post("http://localhost:3001/posts", data, {
         headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {
@@ -44,29 +45,21 @@ function CreatePost() {
           <label>Title: </label>
           <ErrorMessage name="title" component="span" />
           <Field
-            autoComplete="off"
+            autocomplete="off"
             id="inputCreatePost"
             name="title"
-            placeholder="(Ex. Title ...)"
+            placeholder="(Ex. Title...)"
           />
           <label>Post: </label>
           <ErrorMessage name="postText" component="span" />
           <Field
-            autoComplete="off"
+            autocomplete="off"
             id="inputCreatePost"
             name="postText"
-            placeholder="(Ex. Post ...)"
+            placeholder="(Ex. Post...)"
           />
-          {/* <label>Username: </label>
-          <ErrorMessage name="username" component="span" />
-          <Field
-            autoComplete="off"
-            id="inputCreatePost"
-            name="username"
-            placeholder="(Ex. Username ...)"
-          /> */}
 
-          <button type="submit">Create Post</button>
+          <button type="submit"> Create Post</button>
         </Form>
       </Formik>
     </div>

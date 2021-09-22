@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 import { AuthContext } from "../helpers/AuthContext";
 
@@ -16,7 +16,7 @@ function Home() {
       history.push("/login");
     } else {
       axios
-        .get("https://full-stack-comments.herokuapp.com/posts", {
+        .get("http://localhost:3001/posts", {
           headers: { accessToken: localStorage.getItem("accessToken") },
         })
         .then((response) => {
@@ -33,7 +33,7 @@ function Home() {
   const likeAPost = (postId) => {
     axios
       .post(
-        "https://full-stack-comments.herokuapp.com/like",
+        "http://localhost:3001/likes",
         { PostId: postId },
         { headers: { accessToken: localStorage.getItem("accessToken") } }
       )
@@ -44,33 +44,34 @@ function Home() {
               if (response.data.liked) {
                 return { ...post, Likes: [...post.Likes, 0] };
               } else {
-                const likeArray = post.Likes;
-                likeArray.pop();
-                return { ...post, Likes: likeArray };
+                const likesArray = post.Likes;
+                likesArray.pop();
+                return { ...post, Likes: likesArray };
               }
             } else {
               return post;
             }
           })
         );
-      });
 
-    if (likedPosts.includes(postId)) {
-      setLikedPosts(
-        likedPosts.filter((id) => {
-          return id !== postId;
-        })
-      );
-    } else {
-      setLikedPosts([...likedPosts, postId]);
-    }
+        if (likedPosts.includes(postId)) {
+          setLikedPosts(
+            likedPosts.filter((id) => {
+              return id != postId;
+            })
+          );
+        } else {
+          setLikedPosts([...likedPosts, postId]);
+        }
+      });
   };
+
   return (
     <div>
       {listOfPosts.map((value, key) => {
         return (
           <div key={key} className="post">
-            <div className="title">{value.title}</div>
+            <div className="title"> {value.title} </div>
             <div
               className="body"
               onClick={() => {
@@ -81,9 +82,7 @@ function Home() {
             </div>
             <div className="footer">
               <div className="username">
-                <Link className="link" to={`/profile/${value.UserId}`}>
-                  @{value.username}
-                </Link>
+                <Link to={`/profile/${value.UserId}`}> {value.username} </Link>
               </div>
               <div className="buttons">
                 <ThumbUpAltIcon
@@ -94,9 +93,8 @@ function Home() {
                     likedPosts.includes(value.id) ? "unlikeBttn" : "likeBttn"
                   }
                 />
-              </div>
-              <div className="label">
-                <label>{value.Likes.length}</label>
+
+                <label> {value.Likes.length}</label>
               </div>
             </div>
           </div>
