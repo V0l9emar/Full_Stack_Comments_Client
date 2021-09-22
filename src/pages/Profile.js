@@ -9,13 +9,17 @@ function Profile() {
   const [listOfPosts, setListOfPosts] = useState([]);
 
   useEffect(() => {
-    axios.get(`http://localhost:3001/auth/basicinfo/${id}`).then((response) => {
-      setUsername(response.data.username);
-    });
+    axios
+      .get(`https://full-stack-comments.herokuapp.com/auth/basicinfo/${id}`)
+      .then((response) => {
+        setUsername(response.data.username);
+      });
 
-    axios.get(`http://localhost:3001/posts/byuserId/${id}`).then((response) => {
-      setListOfPosts(response.data);
-    });
+    axios
+      .get(`https://full-stack-comments.herokuapp.com/posts/byuserId/${id}`)
+      .then((response) => {
+        setListOfPosts(response.data);
+      });
   }, []);
   return (
     <div className="profilePageContainer">
